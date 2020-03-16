@@ -1,35 +1,70 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
-    StyleSheet, Text
+    StyleSheet, Text, ActivityIndicator
 } from 'react-native';
 import Colors from "./Colors";
 import { LinearGradient } from 'expo-linear-gradient';
 import {useSelector} from "react-redux";
 import Fonts from "./Fonts";
 
-const UserCard = () => {
-    const user = useSelector(state => state.currentUser);
-    return (
-      <LinearGradient
-          style={styles.userCard}
-          colors={[Colors.grey, Colors.yellow, Colors.orange]}
-      >
-          <View style={styles.userCardAvatarContainer}>
-              <Text style={styles.userCardAvatar}>DAY</Text>
-          </View>
-          <View style={styles.userCardNumberContainer}>
-              <Text style={styles.userCardNumber}>
-                  1234
-              </Text>
-          </View>
-          <View style={styles.userCardInfoContainer}>
-              <Text style={styles.userCardInfo}>
-                  {user.displayName}
-              </Text>
-          </View>
-      </LinearGradient>
-    );
+const UserCard = (props) => {
+    const state = useSelector(state => state);
+    const [date, setDate] = useState(new Date().toLocaleString("en-US", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit"
+    }));
+    setInterval(() => {
+        setDate(new Date().toLocaleString("en-US", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }))
+    }, 1000);
+    if (props.location) {
+        let address1 = props.location[0].name;
+        let address2 = props.location[0].city
+            + ' ' + props.location[0].region;
+        let address3 = props.location[0].postalCode
+            + ' ' + props.location[0].isoCountryCode;
+        return (
+            <LinearGradient
+                style={styles.userCard}
+                colors={[Colors.pink, Colors.grey]}
+            >
+                <View style={styles.userCardLocationContainer}>
+                    <Text style={styles.userCardLocation}>
+                        {address1}
+                    </Text>
+                    <Text style={styles.userCardLocation}>
+                        {address2}
+                    </Text>
+                    <Text style={styles.userCardLocation}>
+                        {address3}
+                    </Text>
+                </View>
+                <View style={styles.userCardDateContainer}>
+                    <Text style={styles.userCardDate}>
+                        {date}
+                    </Text>
+                </View>
+                <View style={styles.userCardInfoContainer}>
+                    <Text style={styles.userCardInfo}>
+                        {state.currentUser.displayName.toUpperCase()}
+                    </Text>
+                </View>
+            </LinearGradient>
+        );
+    } else {
+        return (
+            <ActivityIndicator size="large" color={Colors.grey}/>
+        );
+    }
 };
 
 const styles = StyleSheet.create({
@@ -42,37 +77,35 @@ const styles = StyleSheet.create({
         padding: 25,
         borderRadius: 15,
         backgroundColor: Colors.pink,
-        shadowColor: Colors.white,
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.8,
-        shadowRadius: 1,
-        elevation: 5
     },
-    userCardAvatarContainer: {
-
-    },
-    userCardAvatar: {
-        fontFamily: Fonts.primary,
-        color: Colors.white,
-        fontSize: 25
-    },
-    userCardNumberContainer: {
+    userCardLocationContainer: {
         display: 'flex',
         justifyContent: 'center',
     },
-    userCardNumber: {
+    userCardLocation: {
         fontFamily: Fonts.primary,
-        fontSize: 35
+        color: Colors.white,
+        fontSize: 20,
+        fontWeight: 'normal',
+        letterSpacing: 1
+    },
+    userCardDateContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    userCardDate: {
+        fontFamily: Fonts.primary,
+        fontSize: 20,
+        color: Colors.white
     },
     userCardInfoContainer: {
         display: 'flex',
         justifyContent: 'center',
-        fontFamily: Fonts.primary,
-        fontSize: 25
     },
     userCardInfo: {
         fontFamily: Fonts.primary,
-        fontSize: 25
+        fontSize: 20,
+        color: Colors.white,
     }
 });
 

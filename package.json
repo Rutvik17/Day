@@ -23,13 +23,16 @@
     "react-native-navigation": "^3.6.0",
     "react-native-reanimated": "^1.2.0",
     "react-native-web": "^0.11.7",
-    "react-native-webview": "^7.6.0",
+    "react-native-webview": "7.0.5",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "expo-location": "~7.0.0",
+    "expo-constants": "latest",
+    "expo-permissions": "latest"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"

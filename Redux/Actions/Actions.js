@@ -4,3 +4,10 @@ export const currentUser = (user) => {
       load: user
     };
 };
+
+export const locationAction = (loc) => {
+    return {
+        type: 'CURRENT_LOCATION',
+        load: loc
+    };
+};

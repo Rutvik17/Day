@@ -1,10 +1,13 @@
-##DAY
+## Day
 
-##Install
+## Install
+
 `1. Clone this repository`
 
 `2. Add a FirebaseConfig.js file to the root folder`
+
 ## Usage
+
 Add a `FirebaseConfig.js` file in the project folder with your firebase app config object
 ```javascript
 const firebaseConfig = {

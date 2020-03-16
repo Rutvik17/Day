@@ -20,7 +20,6 @@ const Login = props => {
     const moveAnimation = new Animated.ValueXY({x: 0, y: -20});
     const [error, setError] = useState();
     const [showActivityIndicator, setShowActivityIndicator] = useState(false);
-    Colors.actionBar = Colors.lightBlue;
     const _moveFormUp = () => {
         Animated.spring(moveAnimation, {
             toValue: {x: 0, y: -90},

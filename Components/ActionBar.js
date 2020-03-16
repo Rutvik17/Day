@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     container: {
         height: 70,
         width: '100%',
-        backgroundColor: Colors.actionBar,
+        backgroundColor: Colors.black,
         flexDirection: 'row',
     },
     errorContainer: {

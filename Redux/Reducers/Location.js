@@ -1,10 +1,10 @@
-const currentUserReducer = (state = {}, action) => {
+const locationReducer = (state = {}, action) => {
     switch (action.type) {
-        case 'CURRENT_USER':
+        case 'CURRENT_LOCATION':
             return state = action.load;
         default:
             return state;
     }
 };
 
-export default currentUserReducer;
+export default locationReducer;
