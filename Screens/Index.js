@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, Component} from 'react'
 import {
     View,
     StyleSheet,
@@ -8,46 +8,57 @@ import * as firebase from "firebase";
 import Home from "./Home";
 import Login from "./Login";
 import UpdateUserName from "./updateUserName";
-import {Provider, useDispatch} from "react-redux";
+import {connect} from "react-redux";
 import {currentUser} from "../Redux/Actions/Actions";
+import {bindActionCreators} from "redux";
 
-const Index = props => {
-    const [user, setUser] = useState();
-    const dispatch = useDispatch();
-    try {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                setUser(user);
-            } else {
-                setUser(user);
-                dispatch(currentUser(user));
-            }
-        });
-    } catch (err) {
-        console.log('error: ', err.message)
+class Index extends Component {
+    state = {
+        user: '',
+    }
+    constructor(props) {
+        super(props);
+        try {
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    this.setState({
+                        user: user
+                    })
+                } else {
+                    this.setState({
+                        user: user
+                    })
+                    this.props.currentUser(this.state.user);
+                }
+            });
+        } catch (err) {
+            console.log('error: ', err.message)
+        }
     }
 
-    if (user) {
-        dispatch(currentUser(user));
-        if (!user.displayName) {
+    render() {
+        if (this.state.user) {
+            this.props.currentUser(this.state.user);
+            if (!this.state.user.displayName) {
+                return (
+                    <UpdateUserName data={this.props}/>
+                );
+            } else {
+                return (
+                    <Home data={this.props}/>
+                );
+            }
+        } else if (!this.state.user) {
             return (
-                <UpdateUserName data={props}/>
+                <Login/>
             );
         } else {
             return (
-                <Home data={props}/>
+                <View style={styles.container}>
+                    <ActivityIndicator size="large" color="#0000ff"/>
+                </View>
             );
         }
-    } else if (!user) {
-        return (
-            <Login/>
-        );
-    } else {
-        return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color="#0000ff"/>
-            </View>
-        );
     }
 };
 
@@ -62,4 +73,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Index;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        currentUser: currentUser
+    }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(Index);

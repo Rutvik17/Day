@@ -5,9 +5,16 @@ export const currentUser = (user) => {
     };
 };
 
-export const locationAction = (loc) => {
+export const currentLocationAction = (loc) => {
     return {
         type: 'CURRENT_LOCATION',
         load: loc
     };
+};
+
+export const currentWeather = (weather) => {
+    return {
+        type: 'CURRENT_WEATHER',
+        load: weather
+    }
 };

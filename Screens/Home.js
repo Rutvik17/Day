@@ -9,17 +9,20 @@ import ActionBar from "../Components/ActionBar";
 import Colors from "../Components/Colors";
 import Fonts from "../Components/Fonts";
 import UserCard from "../Components/UserCard";
+import {connect} from "react-redux";
+import {bindActionCreators} from "redux";
+import {currentLocationAction} from "../Redux/Actions/Actions";
+import WeatherCard from "../Components/WeatherCard";
 
-export default class Home extends Component {
+class Home extends Component {
     state = {
         location: null,
         errorMessage: null,
         locationPermission: null,
-        refreshing: false
+        refreshing: false,
     };
     constructor(props) {
         super(props);
-
     }
 
     componentDidMount() {
@@ -73,6 +76,7 @@ export default class Home extends Component {
     _getLocationAsync = async () => {
         try {
             let location = await Location.getCurrentPositionAsync({});
+            this.props.currentLocationAction(location);
             location = await Location.reverseGeocodeAsync({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
@@ -97,7 +101,7 @@ export default class Home extends Component {
         if (this.state.locationPermission === 'granted') {
             return (
                 <View style={styles.container}>
-                    <StatusBar barStyle="dark-content"/>
+                    <StatusBar barStyle="light-content"/>
                     <ActionBar
                         style={[styles.actionBar, styles.title]}
                         name={'DAY'}
@@ -114,6 +118,9 @@ export default class Home extends Component {
                     >
                         <View style={styles.userCardContainer}>
                             <UserCard location={this.state.location}/>
+                        </View>
+                        <View style={styles.homeScreenCardsContainers}>
+                            <WeatherCard />
                         </View>
                         <Button title={'logout'} onPress={this.onLogout}/>
                         <Button title={'Delete'} onPress={this.onDelete}/>
@@ -160,6 +167,10 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5
     },
+    homeScreenCardsContainers: {
+        margin: 5,
+        padding: 5
+    },
     title: {
         textAlign: 'center',
         fontSize: 24,
@@ -172,3 +183,17 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.black
     }
 });
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        currentLocationAction: currentLocationAction
+    }, dispatch);
+}
+
+function mapStateToProps(state) {
+    return {
+        user: state.currentUser
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

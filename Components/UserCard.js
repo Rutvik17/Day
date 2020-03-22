@@ -26,45 +26,45 @@ const UserCard = (props) => {
             minute: "2-digit"
         }))
     }, 1000);
-    if (props.location) {
+    let addressView = (<View></View>);
+    if (props.location && props.location.length) {
         let address1 = props.location[0].name;
         let address2 = props.location[0].city
             + ' ' + props.location[0].region;
         let address3 = props.location[0].postalCode
             + ' ' + props.location[0].isoCountryCode;
-        return (
-            <LinearGradient
-                style={styles.userCard}
-                colors={[Colors.pink, Colors.grey]}
-            >
-                <View style={styles.userCardLocationContainer}>
-                    <Text style={styles.userCardLocation}>
-                        {address1}
-                    </Text>
-                    <Text style={styles.userCardLocation}>
-                        {address2}
-                    </Text>
-                    <Text style={styles.userCardLocation}>
-                        {address3}
-                    </Text>
-                </View>
-                <View style={styles.userCardDateContainer}>
-                    <Text style={styles.userCardDate}>
-                        {date}
-                    </Text>
-                </View>
-                <View style={styles.userCardInfoContainer}>
-                    <Text style={styles.userCardInfo}>
-                        {state.currentUser.displayName.toUpperCase()}
-                    </Text>
-                </View>
-            </LinearGradient>
-        );
-    } else {
-        return (
-            <ActivityIndicator size="large" color={Colors.grey}/>
+        addressView = (
+            <View style={styles.userCardLocationContainer}>
+                <Text style={styles.userCardLocation}>
+                    {address1}
+                </Text>
+                <Text style={styles.userCardLocation}>
+                    {address2}
+                </Text>
+                <Text style={styles.userCardLocation}>
+                    {address3}
+                </Text>
+            </View>
         );
     }
+    return (
+        <LinearGradient
+            style={styles.userCard}
+            colors={[Colors.pink, Colors.grey]}
+        >
+            {props.location && props.location.length && addressView}
+            <View style={styles.userCardDateContainer}>
+                <Text style={styles.userCardDate}>
+                    {date}
+                </Text>
+            </View>
+            <View style={styles.userCardInfoContainer}>
+                <Text style={styles.userCardInfo}>
+                    {state.currentUser.displayName.toUpperCase()}
+                </Text>
+            </View>
+        </LinearGradient>
+    );
 };
 
 const styles = StyleSheet.create({
