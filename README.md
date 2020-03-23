@@ -8,7 +8,7 @@
 
 ## Usage
 
-Add a `FirebaseConfig.js` file in the project folder with your firebase app config object
+Add a `FirebaseConfig.js` file in the project root folder with your firebase app config object
 ```javascript
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -23,6 +23,19 @@ const firebaseConfig = {
 
 export default firebaseConfig;
 ```
-`3. npm install`
+`3. Add a OpenWeatherConfig.js file to the root folder`
 
-`4. npm start`
+## Usage
+
+Add a `OpenWeatherConfig.js` file in the project root folder with your api key from open weather map
+
+https://openweathermap.org/
+```javascript
+export const openWeatherConfig = {
+  apiKey: 'API_KEY_FROM_OPEN_WEATHER_MAP'
+};
+```
+
+`4. npm install`
+
+`5. npm start`

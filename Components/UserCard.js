@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         minWidth: '100%',
+        maxWidth: '100%',
         height: 250,
         padding: 25,
         borderRadius: 15,

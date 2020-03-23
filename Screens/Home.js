@@ -11,8 +11,9 @@ import Fonts from "../Components/Fonts";
 import UserCard from "../Components/UserCard";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {currentLocationAction} from "../Redux/Actions/Actions";
+import {currentLocationAction, currentWeather} from "../Redux/Actions/Actions";
 import WeatherCard from "../Components/WeatherCard";
+import {getCurrentWeather} from "../Services/WeatherService";
 
 class Home extends Component {
     state = {
@@ -77,6 +78,10 @@ class Home extends Component {
         try {
             let location = await Location.getCurrentPositionAsync({});
             this.props.currentLocationAction(location);
+            await getCurrentWeather(location.coords.latitude,
+                location.coords.longitude).then((res) => {
+                this.props.currentWeather(res);
+            });
             location = await Location.reverseGeocodeAsync({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
@@ -186,7 +191,8 @@ const styles = StyleSheet.create({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        currentLocationAction: currentLocationAction
+        currentLocationAction: currentLocationAction,
+        currentWeather: currentWeather
     }, dispatch);
 }
 
