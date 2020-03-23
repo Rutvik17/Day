@@ -9,7 +9,28 @@ class WeatherCard extends Component {
     state = {
         unit: 'C',
         weather: 0,
-        isMounted: false
+        isMounted: false,
+        icon: require('../assets/WeatherDayIcons/sunny.png')
+    };
+    weatherIcons = {
+        '01d': require('../assets/WeatherDayIcons/sunny.png'),
+        '02d': require('../assets/WeatherDayIcons/cloudy.png'),
+        '03d': require('../assets/WeatherDayIcons/mostlycloudy.png'),
+        '04d': require('../assets/WeatherDayIcons/partlycloudy.png'),
+        '09d': require('../assets/WeatherDayIcons/chancerain.png'),
+        '10d': require('../assets/WeatherDayIcons/rain.png'),
+        '11d': require('../assets/WeatherDayIcons/storm.png'),
+        '13d': require('../assets/WeatherDayIcons/snow.png'),
+        '50d': require('../assets/WeatherDayIcons/fog.png'),
+        '01n': require('../assets/WeatherNightIcons/clear.png'),
+        '02n': require('../assets/WeatherNightIcons/cloudy.png'),
+        '03n': require('../assets/WeatherNightIcons/mostlycloudy.png'),
+        '04n': require('../assets/WeatherNightIcons/partlycloudy.png'),
+        '09n': require('../assets/WeatherNightIcons/chancerain.png'),
+        '10n': require('../assets/WeatherNightIcons/rain.png'),
+        '11n': require('../assets/WeatherNightIcons/storm.png'),
+        '13n': require('../assets/WeatherNightIcons/snow.png'),
+        '50n': require('../assets/WeatherNightIcons/fog.png'),
     };
     constructor(props) {
         super(props);
@@ -34,6 +55,15 @@ class WeatherCard extends Component {
                     weather: Math.round(this.props.weather.main.temp)
                 });
             }
+            this.props.weather.weather.map((r) => {
+                for (let icon in this.weatherIcons) {
+                    if (r.icon === icon) {
+                        this.setState({
+                            icon: r.icon.toString()
+                        });
+                    }
+                }
+            });
         }
     }
 
@@ -66,48 +96,50 @@ class WeatherCard extends Component {
             return (
                 <LinearGradient
                     style={styles.weatherCard}
-                    colors={[Colors.yellow, Colors.orange]}
+                    colors={[Colors.grey, Colors.pink]}
                 >
                 <View style={styles.weatherTemperature}>
-                    <Text style={styles.weatherTemperatureText}>
-                        {this.state.weather
-                        + String.fromCharCode(176)
-                        + (this.state.unit === 'C' ? 'C' : 'F')}
-                    </Text>
+                    <View style={styles.weatherTemperatureTextView}>
+                        <Text style={styles.weatherTemperatureText}>
+                            {this.state.weather
+                            + String.fromCharCode(176)
+                            + (this.state.unit === 'C' ? 'C' : 'F')}
+                        </Text>
+                    </View>
+                    <View style={styles.convertTemperatureView}>
+                        <TouchableOpacity
+                            style={styles.celsiusView}
+                            onPress={this.convertToC}
+                        >
+                            <Text style={styles.conversionText}>
+                                C {' '}
+                            </Text>
+                        </TouchableOpacity>
+                        <Text style={styles.conversionText}>
+                            / {' '}
+                        </Text>
+                        <TouchableOpacity
+                            style={styles.fahrenheitView}
+                            onPress={this.convertToF}
+                        >
+                            <Text style={styles.conversionText}>
+                                F
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.weatherImageContainer}>
                     <View style={styles.weatherImageView}>
                         <Image
                             style={styles.weatherImage}
-                            source={{uri: this.props.weather.weather[0].icon}}
+                            source={this.weatherIcons[this.state.icon]}
                         />
                     </View>
-                    <View style={styles.weatherTemperatureMainContainer}>
-                        <Text style={styles.weatherTemperatureMain}>
-                            {this.props.weather.weather[0].main}
-                        </Text>
-                    </View>
                 </View>
-                <View style={styles.convertTemperatureView}>
-                    <TouchableOpacity
-                        style={styles.celsiusView}
-                        onPress={this.convertToC}
-                    >
-                        <Text style={styles.conversionText}>
-                            C {' '}
-                        </Text>
-                    </TouchableOpacity>
-                    <Text style={styles.conversionText}>
-                        / {' '}
+                <View style={styles.weatherTemperatureMainContainer}>
+                    <Text style={styles.weatherTemperatureMain}>
+                        {this.props.weather.weather[0].main}
                     </Text>
-                    <TouchableOpacity
-                        style={styles.fahrenheitView}
-                        onPress={this.convertToF}
-                    >
-                        <Text style={styles.conversionText}>
-                            F
-                        </Text>
-                    </TouchableOpacity>
                 </View>
                 </LinearGradient>
             );
@@ -134,25 +166,29 @@ const styles = StyleSheet.create({
     },
     weatherImageContainer: {
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     weatherImageView: {
-
+        alignSelf: 'center'
     },
     weatherImage: {
         margin: 0,
-        width: 80,
-        height: 80,
-        resizeMode: 'cover'
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
     },
     weatherTemperature: {
-        alignSelf: 'center'
+        flexDirection: 'column',
+        justifyContent: 'space-around'
     },
     weatherTemperatureText: {
         color: Colors.white,
-        fontSize: 24,
+        fontSize: 28,
         fontWeight: 'bold',
         fontFamily: Fonts.primary,
+    },
+    weatherTemperatureTextView: {
+
     },
     weatherTemperatureMainContainer: {
         alignSelf: 'center'
@@ -162,6 +198,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'normal',
         fontFamily: Fonts.primary,
+        flexWrap: 'wrap'
     },
     convertTemperatureView: {
         alignSelf: 'center',

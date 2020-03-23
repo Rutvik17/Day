@@ -8,11 +8,6 @@ export function getCurrentWeather (latitude, longitude) {
             + openWeatherConfig.apiKey + '&units=metric')
             .then((response) => response.json())
             .then((weather) => {
-                if (weather && weather.weather && weather.weather.length) {
-                    weather.weather.map((r) => {
-                        r.icon = 'http://openweathermap.org/img/wn/' + r.icon + '@2x.png'
-                    });
-                }
                 console.log(weather);
                 resolve(weather);
             }, error => {
