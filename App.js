@@ -11,6 +11,7 @@ import AppNavigator from "./Screens/AppNavigator";
 import {Provider} from "react-redux";
 import {createStore} from "redux";
 import allReducers from "./Redux/Reducers/Index";
+import * as Font from 'expo-font';
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -26,6 +27,16 @@ export default function App() {
         allReducers,
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     );
+    Font.loadAsync({
+        'raleway': require('./assets/Fonts/Raleway/Raleway-Regular.ttf'),
+        'raleway-bold': require('./assets/Fonts/Raleway/Raleway-Bold.ttf'),
+        'balooda-regular': require('./assets/Fonts/BalooDa2/BalooDa2-Regular.ttf'),
+        'balooda-bold': require('./assets/Fonts/BalooDa2/BalooDa2-Regular.ttf'),
+        'varela-regular': require('./assets/Fonts/VarelaRound/VarelaRound-Regular.ttf'),
+        'josefin-regular': require('./assets/Fonts/JosefinSans/JosefinSans-Regular.ttf'),
+        'josefin-bold': require('./assets/Fonts/JosefinSans/JosefinSans-Bold.ttf'),
+        'indie-flower-regular': require('./assets/Fonts/IndieFlower/IndieFlower-Regular.ttf')
+    })
     if(appReady) {
         return (
             <Provider store={store}>

@@ -74,9 +74,8 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 24,
-        fontWeight: 'bold',
         color: Colors.white,
-        fontFamily: Fonts.primary
+        fontFamily: Fonts.primaryBold
     },
     error: {
         textAlign: 'center',

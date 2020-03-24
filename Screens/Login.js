@@ -230,11 +230,10 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 24,
-        fontWeight: 'bold',
         letterSpacing: 3,
         color: Colors.yellow,
         margin: 15,
-        fontFamily: Fonts.primary
+        fontFamily: Fonts.baloodaBold
     }
 });
 

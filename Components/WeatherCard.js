@@ -10,7 +10,8 @@ class WeatherCard extends Component {
         unit: 'C',
         weather: 0,
         isMounted: false,
-        icon: require('../assets/WeatherDayIcons/sunny.png')
+        icon: require('../assets/WeatherDayIcons/sunny.png'),
+        feelsLikeWeather: 0
     };
     weatherIcons = {
         '01d': require('../assets/WeatherDayIcons/sunny.png'),
@@ -54,6 +55,9 @@ class WeatherCard extends Component {
                 this.setState({
                     weather: Math.round(this.props.weather.main.temp)
                 });
+                this.setState({
+                    feelsLikeWeather: Math.round(this.props.weather.main['feels_like'])
+                });
             }
             this.props.weather.weather.map((r) => {
                 for (let icon in this.weatherIcons) {
@@ -70,8 +74,12 @@ class WeatherCard extends Component {
     convertToC= () => {
         if (this.state.unit === 'F') {
             let result = (this.state.weather - 32) * (5 / 9);
+            let feelsLike = (this.state.feelsLikeWeather - 32) * (5 / 9);
             this.setState({
                 weather: Math.round(result)
+            });
+            this.setState({
+                feelsLikeWeather: Math.round(feelsLike)
             });
             this.setState({
                 unit: 'C'
@@ -82,8 +90,12 @@ class WeatherCard extends Component {
     convertToF = () => {
         if (this.state.unit === 'C') {
             let result = (this.state.weather * (9/5)) + 32;
+            let feelsLike = (this.state.feelsLikeWeather * (9/5)) + 32;
             this.setState({
                 weather: Math.round(result)
+            });
+            this.setState({
+                feelsLikeWeather: Math.round(feelsLike)
             });
             this.setState({
                 unit: 'F'
@@ -102,6 +114,11 @@ class WeatherCard extends Component {
                     <View style={styles.weatherTemperatureTextView}>
                         <Text style={styles.weatherTemperatureText}>
                             {this.state.weather
+                            + String.fromCharCode(176)
+                            + (this.state.unit === 'C' ? 'C' : 'F')}
+                        </Text>
+                        <Text style={styles.weatherTemperatureFeelsLikeText}>
+                            {'Feels Like ' + this.state.feelsLikeWeather
                             + String.fromCharCode(176)
                             + (this.state.unit === 'C' ? 'C' : 'F')}
                         </Text>
@@ -183,8 +200,12 @@ const styles = StyleSheet.create({
     },
     weatherTemperatureText: {
         color: Colors.white,
-        fontSize: 28,
-        fontWeight: 'bold',
+        fontSize: 42,
+        fontFamily: Fonts.primaryBold,
+    },
+    weatherTemperatureFeelsLikeText: {
+        color: Colors.white,
+        fontSize: 12,
         fontFamily: Fonts.primary,
     },
     weatherTemperatureTextView: {

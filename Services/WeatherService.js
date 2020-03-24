@@ -8,7 +8,6 @@ export function getCurrentWeather (latitude, longitude) {
             + openWeatherConfig.apiKey + '&units=metric')
             .then((response) => response.json())
             .then((weather) => {
-                console.log(weather);
                 resolve(weather);
             }, error => {
                 reject(error);

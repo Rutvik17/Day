@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
     View,
-    StyleSheet, Text, ActivityIndicator
+    StyleSheet, Text, ActivityIndicator, Platform
 } from 'react-native';
 import Colors from "./Colors";
 import { LinearGradient } from 'expo-linear-gradient';
@@ -14,21 +14,26 @@ const UserCard = (props) => {
         day: "numeric",
         month: "short",
         year: "numeric",
-        hour: "numeric",
-        minute: "2-digit"
     }));
     setInterval(() => {
-        setDate(new Date().toLocaleString("en-US", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-            hour: "numeric",
-            minute: "2-digit"
-        }))
+        if (Platform.OS === 'ios') {
+            setDate(new Date().toLocaleString("en-US", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+            }))
+        } else {
+            setDate(new Date().toLocaleDateString());
+        }
     }, 1000);
     let addressView = (<View></View>);
     if (props.location && props.location.length) {
-        let address1 = props.location[0].name;
+        let address1;
+        if (Platform.OS === 'ios') {
+            address1 = props.location[0].name;
+        } else {
+            address1 = props.location[0].name + ' ' + props.location[0].street
+        }
         let address2 = props.location[0].city
             + ' ' + props.location[0].region;
         let address3 = props.location[0].postalCode

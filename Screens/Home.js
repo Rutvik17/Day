@@ -127,8 +127,14 @@ class Home extends Component {
                         <View style={styles.homeScreenCardsContainers}>
                             <WeatherCard />
                         </View>
-                        <Button title={'logout'} onPress={this.onLogout}/>
-                        <Button title={'Delete'} onPress={this.onDelete}/>
+                        <View style={{margin: 2.5, padding: 2.5}}>
+                            <View style={{margin: 2.5, padding: 2.5}}>
+                                <Button title={'logout'} onPress={this.onLogout}/>
+                            </View>
+                            <View style={{margin: 2.5, padding: 2.5}}>
+                                <Button title={'Delete'} onPress={this.onDelete}/>
+                            </View>
+                        </View>
                     </ScrollView>
                 </View>
             );
@@ -179,9 +185,8 @@ const styles = StyleSheet.create({
     title: {
         textAlign: 'center',
         fontSize: 24,
-        fontWeight: 'bold',
         color: Colors.white,
-        fontFamily: Fonts.primary,
+        fontFamily: Fonts.baloodaBold,
         letterSpacing: 3
     },
     actionBar: {
