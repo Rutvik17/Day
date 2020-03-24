@@ -36,6 +36,8 @@ export const openWeatherConfig = {
 };
 ```
 
-`4. npm install`
+`4. npm install -g expo-cli`
 
-`5. npm start`
+`5. npm install`
+
+`6. npm start`

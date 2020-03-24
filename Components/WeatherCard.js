@@ -10,7 +10,6 @@ class WeatherCard extends Component {
         unit: 'C',
         weather: 0,
         isMounted: false,
-        icon: require('../assets/WeatherDayIcons/sunny.png'),
         feelsLikeWeather: 0
     };
     weatherIcons = {
@@ -49,6 +48,8 @@ class WeatherCard extends Component {
         });
     }
 
+
+
     componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
         if (this.props.weather !== prevProps.weather) {
             if (this.state.isMounted) {
@@ -59,15 +60,6 @@ class WeatherCard extends Component {
                     feelsLikeWeather: Math.round(this.props.weather.main['feels_like'])
                 });
             }
-            this.props.weather.weather.map((r) => {
-                for (let icon in this.weatherIcons) {
-                    if (r.icon === icon) {
-                        this.setState({
-                            icon: r.icon.toString()
-                        });
-                    }
-                }
-            });
         }
     }
 
@@ -104,6 +96,14 @@ class WeatherCard extends Component {
     };
 
     render() {
+        let weatherIcon;
+        this.props.weather.weather.map((r) => {
+            for (let icon in this.weatherIcons) {
+                if (r.icon === icon) {
+                    weatherIcon = r.icon.toString();
+                }
+            }
+        });
         return (
             <LinearGradient
                 style={styles.weatherCard}
@@ -148,7 +148,7 @@ class WeatherCard extends Component {
                 <View style={styles.weatherImageView}>
                     <Image
                         style={styles.weatherImage}
-                        source={this.weatherIcons[this.state.icon]}
+                        source={this.weatherIcons[weatherIcon]}
                     />
                 </View>
             </View>
