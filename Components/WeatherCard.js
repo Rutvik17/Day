@@ -104,69 +104,61 @@ class WeatherCard extends Component {
     };
 
     render() {
-        if (this.props.weather && this.props.weather.weather) {
-            return (
-                <LinearGradient
-                    style={styles.weatherCard}
-                    colors={[Colors.grey, Colors.pink]}
-                >
-                <View style={styles.weatherTemperature}>
-                    <View style={styles.weatherTemperatureTextView}>
-                        <Text style={styles.weatherTemperatureText}>
-                            {this.state.weather
-                            + String.fromCharCode(176)
-                            + (this.state.unit === 'C' ? 'C' : 'F')}
-                        </Text>
-                        <Text style={styles.weatherTemperatureFeelsLikeText}>
-                            {'Feels Like ' + this.state.feelsLikeWeather
-                            + String.fromCharCode(176)
-                            + (this.state.unit === 'C' ? 'C' : 'F')}
-                        </Text>
-                    </View>
-                    <View style={styles.convertTemperatureView}>
-                        <TouchableOpacity
-                            style={styles.celsiusView}
-                            onPress={this.convertToC}
-                        >
-                            <Text style={styles.conversionText}>
-                                C {' '}
-                            </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.conversionText}>
-                            / {' '}
-                        </Text>
-                        <TouchableOpacity
-                            style={styles.fahrenheitView}
-                            onPress={this.convertToF}
-                        >
-                            <Text style={styles.conversionText}>
-                                F
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.weatherImageContainer}>
-                    <View style={styles.weatherImageView}>
-                        <Image
-                            style={styles.weatherImage}
-                            source={this.weatherIcons[this.state.icon]}
-                        />
-                    </View>
-                </View>
-                <View style={styles.weatherTemperatureMainContainer}>
-                    <Text style={styles.weatherTemperatureMain}>
-                        {this.props.weather.weather[0].main}
+        return (
+            <LinearGradient
+                style={styles.weatherCard}
+                colors={[Colors.grey, Colors.pink]}
+            >
+            <View style={styles.weatherTemperature}>
+                <View style={styles.weatherTemperatureTextView}>
+                    <Text style={styles.weatherTemperatureText}>
+                        {this.state.weather
+                        + String.fromCharCode(176)
+                        + (this.state.unit === 'C' ? 'C' : 'F')}
+                    </Text>
+                    <Text style={styles.weatherTemperatureFeelsLikeText}>
+                        {'Feels Like ' + this.state.feelsLikeWeather
+                        + String.fromCharCode(176)
+                        + (this.state.unit === 'C' ? 'C' : 'F')}
                     </Text>
                 </View>
-                </LinearGradient>
-            );
-        } else {
-            return (
-                <View>
-
+                <View style={styles.convertTemperatureView}>
+                    <TouchableOpacity
+                        style={styles.celsiusView}
+                        onPress={this.convertToC}
+                    >
+                        <Text style={styles.conversionText}>
+                            C {' '}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.conversionText}>
+                        / {' '}
+                    </Text>
+                    <TouchableOpacity
+                        style={styles.fahrenheitView}
+                        onPress={this.convertToF}
+                    >
+                        <Text style={styles.conversionText}>
+                            F
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-            );
-        }
+            </View>
+            <View style={styles.weatherImageContainer}>
+                <View style={styles.weatherImageView}>
+                    <Image
+                        style={styles.weatherImage}
+                        source={this.weatherIcons[this.state.icon]}
+                    />
+                </View>
+            </View>
+            <View style={styles.weatherTemperatureMainContainer}>
+                <Text style={styles.weatherTemperatureMain}>
+                    {this.props.weather.weather[0].main}
+                </Text>
+            </View>
+            </LinearGradient>
+        );
     }
 }
 

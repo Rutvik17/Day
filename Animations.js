@@ -1,0 +1,1 @@
+exports.loadingAnimation = require('./assets/Animations/loading.json');

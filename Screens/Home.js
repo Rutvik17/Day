@@ -14,6 +14,8 @@ import {bindActionCreators} from "redux";
 import {currentLocationAction, currentWeather} from "../Redux/Actions/Actions";
 import WeatherCard from "../Components/WeatherCard";
 import {getCurrentWeather} from "../Services/WeatherService";
+import LottieView from "lottie-react-native";
+import {loadingAnimation} from "../Animations";
 
 class Home extends Component {
     state = {
@@ -21,12 +23,29 @@ class Home extends Component {
         errorMessage: null,
         locationPermission: null,
         refreshing: false,
+        date: new Date()
     };
     constructor(props) {
         super(props);
+        setInterval(() => {
+            if (Platform.OS === 'ios') {
+                this.setState({
+                    date: [new Date().toLocaleString("en-US", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                    })]
+                })
+            } else {
+                this.setState({
+                    date: [new Date().toLocaleDateString()]
+                });
+            }
+        }, 1000);
     }
 
     componentDidMount() {
+        this.animation.play();
         this.getPermission();
     }
 
@@ -103,7 +122,7 @@ class Home extends Component {
     };
 
     render() {
-        if (this.state.locationPermission === 'granted') {
+        if (this.state.locationPermission === 'granted' && this.state.location) {
             return (
                 <View style={styles.container}>
                     <StatusBar barStyle="light-content"/>
@@ -122,7 +141,7 @@ class Home extends Component {
                                 />}
                     >
                         <View style={styles.userCardContainer}>
-                            <UserCard location={this.state.location}/>
+                            <UserCard location={this.state.location} date={this.state.date}/>
                         </View>
                         <View style={styles.homeScreenCardsContainers}>
                             <WeatherCard />
@@ -150,9 +169,10 @@ class Home extends Component {
             );
         } else {
             return (
-                <View style={styles.container}>
-                    <StatusBar barStyle="dark-content"/>
-                </View>
+                <LottieView style={styles.container}
+                    ref={animation => {this.animation = animation}}
+                    source={loadingAnimation}
+                />
             );
         }
     }

@@ -8,13 +8,19 @@ import Colors from "../Components/Colors";
 import {RaisedTextButton} from "react-native-material-buttons";
 import 'firebase/firestore'
 import {useSelector} from "react-redux";
+import LottieView from "lottie-react-native";
+import {loadingAnimation} from "../Animations";
 
 const ConfirmDelete = props => {
+    let animation;
     let currentUser = useSelector(state => state.currentUser);
     const moveAnimation = new Animated.ValueXY({x: 0, y: -20});
     const [password, setPassword] = useState();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    if (animation) {
+        animation.play();
+    }
     const _moveFormUp = () => {
         Animated.spring(moveAnimation, {
             toValue: {x: 0, y: -90},
@@ -72,9 +78,10 @@ const ConfirmDelete = props => {
 
     if (loading) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color={Colors.white}/>
-            </View>
+            <LottieView style={styles.container}
+                        ref={r => animation = r}
+                        source={loadingAnimation}
+            />
         );
     } else {
         return (

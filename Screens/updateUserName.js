@@ -10,14 +10,20 @@ import 'firebase/firestore'
 import Home from "./Home";
 import {useDispatch, useSelector} from "react-redux";
 import {currentUser} from "../Redux/Actions/Actions";
+import LottieView from "lottie-react-native";
+import {loadingAnimation} from "../Animations";
 
 const UpdateUserName = props => {
+    let animation;
     const dispatch = useDispatch();
     const moveAnimation = new Animated.ValueXY({x: 0, y: -20});
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const [showActivityIndicator, setShowActivityIndicator] = useState(false);
     const [nameSuccess, setNameSuccess] = useState(false);
+    if (animation) {
+        animation.play();
+    }
     const _moveFormUp = () => {
         Animated.spring(moveAnimation, {
             toValue: {x: 0, y: -90},
@@ -61,9 +67,10 @@ const UpdateUserName = props => {
 
     if (showActivityIndicator) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color={Colors.white}/>
-            </View>
+            <LottieView style={styles.container}
+                        ref={r => animation = r}
+                        source={loadingAnimation}
+            />
         );
     } else if (nameSuccess) {
         return (

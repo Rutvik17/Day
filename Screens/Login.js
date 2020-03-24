@@ -3,7 +3,7 @@ import {
     View,
     Text,
     StyleSheet, Animated,
-    ScrollView, Keyboard, ActivityIndicator
+    ScrollView, Keyboard
 } from 'react-native';
 import * as firebase from 'firebase';
 import {OutlinedTextField} from "react-native-material-textfield";
@@ -11,8 +11,11 @@ import {TextButton, RaisedTextButton} from 'react-native-material-buttons';
 import Fonts from "../Components/Fonts";
 import ActionBar from "../Components/ActionBar";
 import Colors from "../Components/Colors";
+import LottieView from "lottie-react-native";
+import {loadingAnimation} from "../Animations";
 
 const Login = props => {
+    let animation;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [emailError, setEmailError] = useState('');
@@ -20,6 +23,9 @@ const Login = props => {
     const moveAnimation = new Animated.ValueXY({x: 0, y: -20});
     const [error, setError] = useState();
     const [showActivityIndicator, setShowActivityIndicator] = useState(false);
+    if (animation) {
+        animation.play();
+    }
     const _moveFormUp = () => {
         Animated.spring(moveAnimation, {
             toValue: {x: 0, y: -90},
@@ -118,9 +124,10 @@ const Login = props => {
 
     if (showActivityIndicator) {
         return (
-            <View style={styles.container}>
-                <ActivityIndicator size="large" color={Colors.grey}/>
-            </View>
+            <LottieView style={styles.loadingContainer}
+                        ref={r => animation = r}
+                        source={loadingAnimation}
+            />
         );
     } else {
         return (
@@ -198,6 +205,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: '100%',
+        backgroundColor: Colors.black,
+        justifyContent: 'center',
+    },
+    loadingContainer: {
+        flex: 1,
         backgroundColor: Colors.black,
         justifyContent: 'center',
     },

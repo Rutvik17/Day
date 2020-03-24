@@ -7,51 +7,36 @@ import Colors from "./Colors";
 import { LinearGradient } from 'expo-linear-gradient';
 import {useSelector} from "react-redux";
 import Fonts from "./Fonts";
+import LottieView from "lottie-react-native";
+import {loadingAnimation} from "../Animations";
 
 const UserCard = (props) => {
+    let animation;
     const state = useSelector(state => state);
-    const [date, setDate] = useState(new Date().toLocaleString("en-US", {
-        day: "numeric",
-        month: "short",
-        year: "numeric",
-    }));
-    setInterval(() => {
-        if (Platform.OS === 'ios') {
-            setDate(new Date().toLocaleString("en-US", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-            }))
-        } else {
-            setDate(new Date().toLocaleDateString());
-        }
-    }, 1000);
     let addressView = (<View></View>);
-    if (props.location && props.location.length) {
-        let address1;
-        if (Platform.OS === 'ios') {
-            address1 = props.location[0].name;
-        } else {
-            address1 = props.location[0].name + ' ' + props.location[0].street
-        }
-        let address2 = props.location[0].city
-            + ' ' + props.location[0].region;
-        let address3 = props.location[0].postalCode
-            + ' ' + props.location[0].isoCountryCode;
-        addressView = (
-            <View style={styles.userCardLocationContainer}>
-                <Text style={styles.userCardLocation}>
-                    {address1}
-                </Text>
-                <Text style={styles.userCardLocation}>
-                    {address2}
-                </Text>
-                <Text style={styles.userCardLocation}>
-                    {address3}
-                </Text>
-            </View>
-        );
+    let address1;
+    if (Platform.OS === 'ios') {
+        address1 = props.location[0].name;
+    } else {
+        address1 = props.location[0].name + ' ' + props.location[0].street
     }
+    let address2 = props.location[0].city
+        + ' ' + props.location[0].region;
+    let address3 = props.location[0].postalCode
+        + ' ' + props.location[0].isoCountryCode;
+    addressView = (
+        <View style={styles.userCardLocationContainer}>
+            <Text style={styles.userCardLocation}>
+                {address1}
+            </Text>
+            <Text style={styles.userCardLocation}>
+                {address2}
+            </Text>
+            <Text style={styles.userCardLocation}>
+                {address3}
+            </Text>
+        </View>
+    );
     return (
         <LinearGradient
             style={styles.userCard}
@@ -60,7 +45,7 @@ const UserCard = (props) => {
             {props.location && props.location.length && addressView}
             <View style={styles.userCardDateContainer}>
                 <Text style={styles.userCardDate}>
-                    {date}
+                    {props.date[0]}
                 </Text>
             </View>
             <View style={styles.userCardInfoContainer}>
