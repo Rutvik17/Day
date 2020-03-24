@@ -107,7 +107,7 @@ class WeatherCard extends Component {
         return (
             <LinearGradient
                 style={styles.weatherCard}
-                colors={[Colors.grey, Colors.pink]}
+                colors={[Colors.black, Colors.black]}
             >
             <View style={styles.weatherTemperature}>
                 <View style={styles.weatherTemperatureTextView}>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
     },
     weatherTemperatureFeelsLikeText: {
         color: Colors.white,
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: Fonts.primary,
     },
     weatherTemperatureTextView: {

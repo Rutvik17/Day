@@ -45,7 +45,9 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.animation.play();
+        if (this.animation) {
+            this.animation.play();
+        }
         this.getPermission();
     }
 
