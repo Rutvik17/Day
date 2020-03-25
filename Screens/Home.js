@@ -97,17 +97,20 @@ class Home extends Component {
 
     _getLocationAsync = async () => {
         try {
-            let location = await Location.getCurrentPositionAsync({});
-            this.props.currentLocationAction(location);
-            await getCurrentWeather(location.coords.latitude,
-                location.coords.longitude).then((res) => {
-                this.props.currentWeather(res);
+            await Location.watchPositionAsync({accuracy: 6,
+                enableHighAccuracy: true,
+                distanceInterval: 1000,}, async (location) => {
+                this.props.currentLocationAction(location);
+                await getCurrentWeather(location.coords.latitude,
+                    location.coords.longitude).then((res) => {
+                    this.props.currentWeather(res);
+                });
+                location = await Location.reverseGeocodeAsync({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude
+                });
+                this.setState({ location });
             });
-            location = await Location.reverseGeocodeAsync({
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude
-            });
-            this.setState({ location });
         } catch (e) {
             console.log(e);
             this.setState({
@@ -163,7 +166,10 @@ class Home extends Component {
             return (
                 <View style={styles.locationPermissionContainer}>
                     <StatusBar barStyle="dark-content"/>
-                        <Text style={{padding: 10, margin: 10, color: Colors.pink}}>
+                        <Text style={{textAlign: 'center',
+                            padding: 10,
+                            margin: 10,
+                            color: Colors.pink, fontFamily: Fonts.primary}}>
                             The app needs locations turned on to display information.
                             Please allow locations from settings.
                         </Text>

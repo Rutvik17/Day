@@ -40,27 +40,18 @@ class WeatherCard extends Component {
         this.setState({
            isMounted: true,
         });
+        this.setState({
+            weather: Math.round(this.props.weather.main.temp)
+        });
+        this.setState({
+            feelsLikeWeather: Math.round(this.props.weather.main['feels_like'])
+        });
     }
 
     componentWillUnmount() {
         this.setState({
             isMounted: false
         });
-    }
-
-
-
-    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
-        if (this.props.weather !== prevProps.weather) {
-            if (this.state.isMounted) {
-                this.setState({
-                    weather: Math.round(this.props.weather.main.temp)
-                });
-                this.setState({
-                    feelsLikeWeather: Math.round(this.props.weather.main['feels_like'])
-                });
-            }
-        }
     }
 
     convertToC= () => {
