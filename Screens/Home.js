@@ -99,7 +99,7 @@ class Home extends Component {
         try {
             await Location.watchPositionAsync({accuracy: 6,
                 enableHighAccuracy: true,
-                distanceInterval: 1000,}, async (location) => {
+                distanceInterval: 1000, timeInterval: 600000}, async (location) => {
                 this.props.currentLocationAction(location);
                 await getCurrentWeather(location.coords.latitude,
                     location.coords.longitude).then((res) => {
