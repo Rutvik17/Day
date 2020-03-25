@@ -19,10 +19,6 @@ firebase.initializeApp(firebaseConfig);
 export default function App() {
     const [appReady, setAppReady] = useState(false);
     SplashScreen.preventAutoHide();
-    setTimeout(() => {
-        SplashScreen.hide();
-        setAppReady(true);
-    }, 1000);
     const store = createStore(
         allReducers,
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -36,7 +32,10 @@ export default function App() {
         'josefin-regular': require('./assets/Fonts/JosefinSans/JosefinSans-Regular.ttf'),
         'josefin-bold': require('./assets/Fonts/JosefinSans/JosefinSans-Bold.ttf'),
         'indie-flower-regular': require('./assets/Fonts/IndieFlower/IndieFlower-Regular.ttf')
-    })
+    }).then(() => {
+        SplashScreen.hide();
+        setAppReady(true);
+    });
     if(appReady) {
         return (
             <Provider store={store}>

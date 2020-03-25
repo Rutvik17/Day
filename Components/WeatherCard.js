@@ -34,6 +34,16 @@ class WeatherCard extends Component {
     };
     constructor(props) {
         super(props);
+        this.state = {
+            unit: props.weather.sys.country === 'US' ? 'F' : 'C',
+            weather: 0,
+            isMounted: false,
+            feelsLikeWeather: 0
+        };
+        if (this.state.unit === 'F') {
+            props.weather.main.temp = (Math.round(props.weather.main.temp) * (9/5)) + 32;
+            props.weather.main['feels_like'] = (Math.round(props.weather.main['feels_like']) * (9/5)) + 32;
+        }
     }
 
     componentDidMount() {
