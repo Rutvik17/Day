@@ -24,19 +24,16 @@ const UserCard = (props) => {
         + ', ' + props.location[0].region;
     let address3 = props.location[0].postalCode
         + ' ' + props.location[0].isoCountryCode;
-    addressView = (
-        <View style={styles.userCardLocationContainer}>
-            <Text style={styles.userCardLocation}>
-                {city}
-            </Text>
-        </View>
-    );
     return (
         <LinearGradient
             style={styles.userCard}
             colors={[Colors.black, Colors.black]}
         >
-            {props.location && props.location.length && addressView}
+            <View style={styles.userCardLocationContainer}>
+                <Text style={styles.userCardLocation}>
+                    {city}
+                </Text>
+            </View>
         </LinearGradient>
     );
 };
@@ -45,7 +42,6 @@ const styles = StyleSheet.create({
     userCard: {
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
         minWidth: '100%',
         maxWidth: '100%',
         padding: 10,
@@ -54,15 +50,15 @@ const styles = StyleSheet.create({
     },
     userCardLocationContainer: {
         display: 'flex',
-        justifyContent: 'center',
         flexWrap: 'wrap'
     },
     userCardLocation: {
         fontFamily: Fonts.josefinBold,
         color: Colors.white,
         fontSize: 36,
+        width: '100%',
         letterSpacing: 1,
-        textAlign: 'center'
+        textAlign: 'center',
     },
 });
 

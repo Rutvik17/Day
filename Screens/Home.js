@@ -88,10 +88,6 @@ class Home extends Component {
                         locationPermission: status
                     });
                 }
-                this.setState({
-                    refreshing: false,
-                    loading: false
-                });
             } catch (e) {
                 console.error(e);
                 this.setState({
@@ -119,7 +115,7 @@ class Home extends Component {
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude
                 });
-                this.setState({ location: location, loading: false });
+                this.setState({ refreshing: false, location: location, loading: false });
             });
         } catch (e) {
             console.log(e);
@@ -134,7 +130,6 @@ class Home extends Component {
     onRefresh = () => {
         this.setState({
             refreshing: true,
-            loading: true
         });
         this.componentDidMount();
     };
@@ -200,7 +195,7 @@ class Home extends Component {
                     </ScrollView>
                 </View>
             );
-        } else {
+        } else if (this.state.locationPermission === 'denied') {
             return (
                 <View style={styles.locationPermissionContainer}>
                     <StatusBar barStyle="dark-content"/>
@@ -212,6 +207,13 @@ class Home extends Component {
                             Please allow locations from settings.
                         </Text>
                 </View>
+            );
+        } else {
+            return (
+                <LottieView style={styles.container}
+                            ref={animation => {this.animation = animation}}
+                            source={loadingAnimation}
+                />
             );
         }
     }

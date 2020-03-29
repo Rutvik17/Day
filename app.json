@@ -3,7 +3,6 @@
     "name": "Day",
     "slug": "Day",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
