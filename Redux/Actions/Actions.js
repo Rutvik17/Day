@@ -18,3 +18,10 @@ export const currentWeather = (weather) => {
         load: weather
     }
 };
+
+export const weatherForecast = (weather) => {
+    return {
+        type: 'WEATHER_FORECAST',
+        load: weather
+    }
+};

@@ -1,5 +1,11 @@
 ## Day
 
+This is a `React-Native` project with `firebase authentication` that 
+will ask for location permissions and display weather based on the user location using the `https://openweathermap.org/ api` 
+
+`The purpose of this project is to share code, collaborate with people in the community and to be a motivation for people to create something amazing! ❤️`
+
+![day](https://user-images.githubusercontent.com/19266929/77842324-c093d600-715e-11ea-8198-09455e0d3565.gif)
 ## Install
 
 `1. Clone this repository`

@@ -11,9 +11,9 @@ import Fonts from "../Components/Fonts";
 import UserCard from "../Components/UserCard";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {currentLocationAction, currentWeather} from "../Redux/Actions/Actions";
+import {currentLocationAction, currentWeather, weatherForecast} from "../Redux/Actions/Actions";
 import WeatherCard from "../Components/WeatherCard";
-import {getCurrentWeather} from "../Services/WeatherService";
+import {getCurrentWeather, getWeatherForecast} from "../Services/WeatherService";
 import LottieView from "lottie-react-native";
 import {loadingAnimation} from "../Animations";
 
@@ -23,33 +23,27 @@ class Home extends Component {
         errorMessage: null,
         locationPermission: null,
         refreshing: false,
-        date: new Date(),
-        loading: true
+        loading: true,
+        _isMounted: false
     };
     constructor(props) {
         super(props);
-        setInterval(() => {
-            if (Platform.OS === 'ios') {
-                this.setState({
-                    date: [new Date().toLocaleString("en-US", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                    })]
-                })
-            } else {
-                this.setState({
-                    date: [new Date().toLocaleDateString()]
-                });
-            }
-        }, 1000);
     }
 
     componentDidMount() {
+        this.setState({
+            _isMounted: true
+        });
         if (this.animation) {
             this.animation.play();
         }
         this.getPermission();
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            _isMounted: false
+        });
     }
 
     onLogout = () => {
@@ -66,37 +60,42 @@ class Home extends Component {
 
     getPermission = async () => {
         if (Platform.OS === 'android' && !Constants.isDevice) {
-            this.setState({
-                errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-            });
-            this._getLocationAsync();
-            this.setState({
-                refreshing: false,
-                loading: false
-            });
+            if (this.state._isMounted) {
+                this.setState({
+                    errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+                });
+                this._getLocationAsync();
+                this.setState({
+                    refreshing: false,
+                    loading: false
+                });
+            }
         } else {
             try {
                 let { status } = await Permissions.getAsync('location');
-                this.setState({
-                    locationPermission: status
-                });
-                if (this.state.locationPermission === 'granted') {
-                    this._getLocationAsync();
-                } else {
-                    status = await Permissions.askAsync('location');
+                if (this.state._isMounted) {
                     this.setState({
                         locationPermission: status
                     });
+                    if (this.state.locationPermission === 'granted') {
+                        this._getLocationAsync();
+                    } else {
+                        status = await Permissions.askAsync('location');
+                        this.setState({
+                            locationPermission: status
+                        });
+                    }
                 }
             } catch (e) {
-                console.error(e);
-                this.setState({
-                    errorMessage: 'Something went wrong, please try again!',
-                });
-                this.setState({
-                    refreshing: false,
-                    loading: false,
-                });
+                if (this.state._isMounted) {
+                    this.setState({
+                        errorMessage: 'Something went wrong, please try again!',
+                    });
+                    this.setState({
+                        refreshing: false,
+                        loading: false,
+                    });
+                }
             }
         }
     };
@@ -111,26 +110,35 @@ class Home extends Component {
                     location.coords.longitude).then((res) => {
                     this.props.currentWeather(res);
                 });
+                await getWeatherForecast(location.coords.latitude,
+                    location.coords.longitude).then((res) => {
+                    this.props.weatherForecast(res);
+                });
                 location = await Location.reverseGeocodeAsync({
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude
                 });
-                this.setState({ refreshing: false, location: location, loading: false });
+                if (this.state._isMounted) {
+                    this.setState({ refreshing: false, location: location, loading: false });
+                }
             });
         } catch (e) {
-            console.log(e);
-            this.setState({
-                errorMessage: 'Something went wrong, please try again!',
-                loading: false,
-                refreshing: false,
-            });
+            if (this.state._isMounted) {
+                this.setState({
+                    errorMessage: 'Something went wrong, please try again!',
+                    loading: false,
+                    refreshing: false,
+                });
+            }
         }
     };
 
     onRefresh = () => {
-        this.setState({
-            refreshing: true,
-        });
+        if (this.state._isMounted) {
+            this.setState({
+                refreshing: true,
+            });
+        }
         this.componentDidMount();
     };
 
@@ -179,7 +187,7 @@ class Home extends Component {
                                 />}
                     >
                         <View style={styles.userCardContainer}>
-                            <UserCard location={this.state.location} date={this.state.date}/>
+                            <UserCard location={this.state.location}/>
                         </View>
                         <View style={styles.homeScreenCardsContainers}>
                             <WeatherCard />
@@ -258,7 +266,8 @@ const styles = StyleSheet.create({
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         currentLocationAction: currentLocationAction,
-        currentWeather: currentWeather
+        currentWeather: currentWeather,
+        weatherForecast: weatherForecast
     }, dispatch);
 }
 
