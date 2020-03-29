@@ -28,10 +28,7 @@ export default function App() {
         'raleway-bold': require('./assets/Fonts/Raleway/Raleway-Bold.ttf'),
         'balooda-regular': require('./assets/Fonts/BalooDa2/BalooDa2-Regular.ttf'),
         'balooda-bold': require('./assets/Fonts/BalooDa2/BalooDa2-Regular.ttf'),
-        'varela-regular': require('./assets/Fonts/VarelaRound/VarelaRound-Regular.ttf'),
-        'josefin-regular': require('./assets/Fonts/JosefinSans/JosefinSans-Regular.ttf'),
-        'josefin-bold': require('./assets/Fonts/JosefinSans/JosefinSans-Bold.ttf'),
-        'indie-flower-regular': require('./assets/Fonts/IndieFlower/IndieFlower-Regular.ttf')
+        'titan-one': require('./assets/Fonts/TitanOne/TitanOneRegular.ttf')
     }).then(() => {
         SplashScreen.hide();
         setAppReady(true);

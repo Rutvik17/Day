@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         color: Colors.white,
-        fontFamily: Fonts.primaryBold
+        fontFamily: Fonts.titanOne
     },
     error: {
         textAlign: 'center',

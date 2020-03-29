@@ -243,9 +243,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 24,
         letterSpacing: 3,
-        color: Colors.yellow,
+        color: Colors.brown,
         margin: 15,
-        fontFamily: Fonts.baloodaBold
+        fontFamily: Fonts.titanOne
     }
 });
 

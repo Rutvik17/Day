@@ -8,7 +8,8 @@ const Colors = {
     orange: '#F18701',
     red: '#F35B04',
     black: '#040404',
-    white: '#FFFFFF'
+    white: '#FFFFFF',
+    brown: '#AD9A89'
 };
 
 export default Colors;

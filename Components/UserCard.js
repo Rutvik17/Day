@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap'
     },
     userCardLocation: {
-        fontFamily: Fonts.josefinBold,
-        color: Colors.white,
+        fontFamily: Fonts.titanOne,
+        color: Colors.lightBlue,
         fontSize: 36,
         width: '100%',
         letterSpacing: 1,

@@ -13,5 +13,6 @@ web-build/
 web-report/
 FirebaseConfig.js
 OpenWeatherConfig.js
+NewsConfig.js
 # macOS
 .DS_Store

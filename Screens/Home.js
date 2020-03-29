@@ -11,11 +11,13 @@ import Fonts from "../Components/Fonts";
 import UserCard from "../Components/UserCard";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {currentLocationAction, currentWeather, weatherForecast} from "../Redux/Actions/Actions";
+import {currentLocationAction, currentWeather, topHeadlines, weatherForecast} from "../Redux/Actions/Actions";
 import WeatherCard from "../Components/WeatherCard";
 import {getCurrentWeather, getWeatherForecast} from "../Services/WeatherService";
 import LottieView from "lottie-react-native";
 import {loadingAnimation} from "../Animations";
+import {getTopHeadlines} from "../Services/NewsService";
+import NewsComponent from "../Components/NewsComponent";
 
 class Home extends Component {
     state = {
@@ -121,6 +123,8 @@ class Home extends Component {
                 if (this.state._isMounted) {
                     this.setState({ refreshing: false, location: location, loading: false });
                 }
+                let topHeadlines = await getTopHeadlines(location[0].isoCountryCode, location[0].city);
+                this.props.topHeadlines(topHeadlines);
             });
         } catch (e) {
             if (this.state._isMounted) {
@@ -177,7 +181,7 @@ class Home extends Component {
                         name={'DAY'}
                         error={this.state.errorMessage}
                     />
-                    <ScrollView contentContainerStyle={styles.container}
+                    <ScrollView contentContainerStyle={styles.scrollViewContainer}
                                 refreshControl={<RefreshControl
                                     refreshing={this.state.refreshing}
                                     onRefresh={this.onRefresh}
@@ -189,8 +193,11 @@ class Home extends Component {
                         <View style={styles.userCardContainer}>
                             <UserCard location={this.state.location}/>
                         </View>
-                        <View style={styles.homeScreenCardsContainers}>
+                        <View style={styles.weatherCardContainer}>
                             <WeatherCard />
+                        </View>
+                        <View style={styles.newsContainer}>
+                            <NewsComponent />
                         </View>
                         <View style={{margin: 2.5, padding: 2.5}}>
                             <View style={{margin: 2.5, padding: 2.5}}>
@@ -232,7 +239,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: Colors.black
+        backgroundColor: Colors.black,
+    },
+    scrollViewContainer: {
+       height: 'auto'
     },
     locationPermissionContainer: {
         flex: 1,
@@ -247,15 +257,19 @@ const styles = StyleSheet.create({
         margin: 5,
         padding: 5
     },
-    homeScreenCardsContainers: {
+    newsContainer: {
+        margin: 5,
+        padding: 5
+    },
+    weatherCardContainer: {
         margin: 5,
         padding: 5
     },
     title: {
         textAlign: 'center',
         fontSize: 24,
-        color: Colors.white,
-        fontFamily: Fonts.baloodaBold,
+        color: Colors.brown,
+        fontFamily: Fonts.titanOne,
         letterSpacing: 3
     },
     actionBar: {
@@ -267,7 +281,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({
         currentLocationAction: currentLocationAction,
         currentWeather: currentWeather,
-        weatherForecast: weatherForecast
+        weatherForecast: weatherForecast,
+        topHeadlines: topHeadlines
     }, dispatch);
 }
 

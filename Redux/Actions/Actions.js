@@ -25,3 +25,10 @@ export const weatherForecast = (weather) => {
         load: weather
     }
 };
+
+export const topHeadlines = (news) => {
+    return {
+        type: 'TOP_HEADLINES',
+        load: news
+    }
+};

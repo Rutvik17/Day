@@ -123,12 +123,12 @@ class WeatherCard extends Component {
             return (
                 <View style={styles.weatherForecastContainer} key={index}>
                     <View key={index + 1}>
-                        <Text style={{color: Colors.white, textAlign: 'center', fontSize: 16, fontFamily: Fonts.primary}}>
+                        <Text style={{color: Colors.brown, textAlign: 'center', fontSize: 16, fontFamily: Fonts.primary}}>
                             {time}
                         </Text>
                     </View>
                     <View key={index + 2}>
-                        <Text style={{color: Colors.white, textAlign: 'center', fontSize: 24, fontFamily: Fonts.primary}}>
+                        <Text style={{color: Colors.brown, textAlign: 'center', fontSize: 24, fontFamily: Fonts.primary}}>
                             {(this.state.unit === 'C' ? Math.round(weather.main.temp) : Math.round(weather.main.temp * (9/5) + 32))
                             + String.fromCharCode(176)
                             + (this.state.unit === 'C' ? 'C' : 'F')}
@@ -144,7 +144,7 @@ class WeatherCard extends Component {
                         />
                     </View>
                     <View key={index + 4}>
-                        <Text  style={{color: Colors.white, textAlign: 'center', fontSize: 16, fontFamily: Fonts.primary}}>
+                        <Text  style={{color: Colors.brown, textAlign: 'center', fontSize: 16, fontFamily: Fonts.primary}}>
                             {weather.weather[0].main}
                         </Text>
                     </View>
@@ -258,12 +258,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     weatherTemperatureText: {
-        color: Colors.white,
+        color: Colors.red,
         fontSize: 42,
         fontFamily: Fonts.primaryBold,
     },
     weatherTemperatureFeelsLikeText: {
-        color: Colors.white,
+        color: Colors.brown,
         fontSize: 14,
         fontFamily: Fonts.primary,
     },
@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     weatherTemperatureMain: {
-        color: Colors.white,
+        color: Colors.pink,
         fontSize: 24,
         fontWeight: 'normal',
         fontFamily: Fonts.primary,
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
 
     },
     conversionText: {
-        color: Colors.white,
+        color: Colors.brown,
         fontSize: 24,
         fontWeight: 'normal',
         fontFamily: Fonts.primary,
