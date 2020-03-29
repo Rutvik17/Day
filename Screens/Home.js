@@ -23,7 +23,8 @@ class Home extends Component {
         errorMessage: null,
         locationPermission: null,
         refreshing: false,
-        date: new Date()
+        date: new Date(),
+        loading: true
     };
     constructor(props) {
         super(props);
@@ -68,28 +69,37 @@ class Home extends Component {
             this.setState({
                 errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
             });
+            this._getLocationAsync();
             this.setState({
-                refreshing: false
+                refreshing: false,
+                loading: false
             });
         } else {
             try {
-                let { status } = await Permissions.askAsync(Permissions.LOCATION);
+                let { status } = await Permissions.getAsync('location');
                 this.setState({
                     locationPermission: status
                 });
                 if (this.state.locationPermission === 'granted') {
                     this._getLocationAsync();
+                } else {
+                    status = await Permissions.askAsync('location');
+                    this.setState({
+                        locationPermission: status
+                    });
                 }
                 this.setState({
-                    refreshing: false
+                    refreshing: false,
+                    loading: false
                 });
             } catch (e) {
-                console.log(e);
+                console.error(e);
                 this.setState({
                     errorMessage: 'Something went wrong, please try again!',
                 });
                 this.setState({
-                    refreshing: false
+                    refreshing: false,
+                    loading: false,
                 });
             }
         }
@@ -109,24 +119,52 @@ class Home extends Component {
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude
                 });
-                this.setState({ location });
+                this.setState({ location: location, loading: false });
             });
         } catch (e) {
             console.log(e);
             this.setState({
                 errorMessage: 'Something went wrong, please try again!',
+                loading: false,
+                refreshing: false,
             });
         }
     };
 
     onRefresh = () => {
         this.setState({
-            refreshing: true
+            refreshing: true,
+            loading: true
         });
         this.componentDidMount();
     };
 
     render() {
+        if (this.state.loading) {
+            return (
+                <LottieView style={styles.container}
+                            ref={animation => {this.animation = animation}}
+                            source={loadingAnimation}
+                />
+            );
+        }
+        if (this.state.errorMessage) {
+            return (
+                <View style={styles.container}>
+                    <StatusBar barStyle="light-content"/>
+                    <ActionBar
+                        style={[styles.actionBar, styles.title]}
+                        name={'DAY'}
+                        error={this.state.errorMessage}
+                    />
+                    <View style={{margin: 2.5, padding: 2.5}}>
+                        <View style={{margin: 2.5, padding: 2.5}}>
+                            <Button title={'Reload'} onPress={this.onRefresh}/>
+                        </View>
+                    </View>
+                </View>
+            );
+        }
         if (this.state.locationPermission === 'granted' && this.state.location) {
             return (
                 <View style={styles.container}>
@@ -162,7 +200,7 @@ class Home extends Component {
                     </ScrollView>
                 </View>
             );
-        } else if (this.state.locationPermission === 'denied') {
+        } else {
             return (
                 <View style={styles.locationPermissionContainer}>
                     <StatusBar barStyle="dark-content"/>
@@ -174,13 +212,6 @@ class Home extends Component {
                             Please allow locations from settings.
                         </Text>
                 </View>
-            );
-        } else {
-            return (
-                <LottieView style={styles.container}
-                    ref={animation => {this.animation = animation}}
-                    source={loadingAnimation}
-                />
             );
         }
     }

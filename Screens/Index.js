@@ -2,7 +2,6 @@ import React, {useState, Component} from 'react'
 import {
     View,
     StyleSheet,
-    ActivityIndicator
 } from 'react-native'
 import * as firebase from "firebase";
 import Home from "./Home";
@@ -11,10 +10,11 @@ import UpdateUserName from "./updateUserName";
 import {connect} from "react-redux";
 import {currentUser} from "../Redux/Actions/Actions";
 import {bindActionCreators} from "redux";
+import Colors from "../Components/Colors";
 
 class Index extends Component {
     state = {
-        user: '',
+        user: undefined,
     }
     constructor(props) {
         super(props);
@@ -48,14 +48,13 @@ class Index extends Component {
                     <Home data={this.props}/>
                 );
             }
-        } else if (!this.state.user) {
+        } else if (this.state.user === null) {
             return (
                 <Login/>
             );
         } else {
             return (
                 <View style={styles.container}>
-                    <ActivityIndicator size="large" color="#0000ff"/>
                 </View>
             );
         }
@@ -69,7 +68,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: Colors.black
     }
 });
 

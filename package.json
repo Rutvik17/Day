@@ -9,9 +9,14 @@
   },
   "dependencies": {
     "@expo/vector-icons": "latest",
+    "eslint": "^6.8.0",
     "expo": "^35.0.0",
+    "expo-constants": "~7.0.0",
     "expo-linear-gradient": "~7.0.0",
+    "expo-location": "~7.0.0",
+    "expo-permissions": "~7.0.0",
     "firebase": "^7.2.2",
+    "lottie-react-native": "~2.6.1",
     "native-base": "^2.13.8",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -29,11 +34,7 @@
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0",
-    "expo-location": "~7.0.0",
-    "expo-constants": "latest",
-    "expo-permissions": "latest",
-    "lottie-react-native": "~2.6.1"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
