@@ -4,7 +4,6 @@ This is a `React-Native` project with `firebase authentication` that
 will keep you upto date with with everything happening on the `DAY`.
 
 ![login](https://user-images.githubusercontent.com/19266929/77862834-0f3b8180-71ec-11ea-92a1-f83a861ad22d.gif)
-
 ![dashboard](https://user-images.githubusercontent.com/19266929/77862843-1cf10700-71ec-11ea-8e31-fb1546d8696e.gif)
 
 `The purpose of this project is to share code, collaborate with people in the community and to be a motivation for people to create something amazing! ❤️`
