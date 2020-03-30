@@ -225,7 +225,6 @@ const styles = StyleSheet.create({
         maxWidth: '100%',
         height: 125,
         borderRadius: 15,
-        backgroundColor: Colors.pink,
     },
     weatherForecastView: {
         display: 'flex',
@@ -258,7 +257,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     weatherTemperatureText: {
-        color: Colors.red,
+        color: Colors.orange,
         fontSize: 42,
         fontFamily: Fonts.primaryBold,
     },
@@ -274,10 +273,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     weatherTemperatureMain: {
-        color: Colors.pink,
+        color: Colors.brown,
         fontSize: 24,
         fontWeight: 'normal',
-        fontFamily: Fonts.primary,
+        fontFamily: Fonts.titanOne,
         flexWrap: 'wrap'
     },
     convertTemperatureView: {

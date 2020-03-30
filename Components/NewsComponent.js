@@ -18,10 +18,10 @@ class newsComponent extends Component {
             </View>);
             headlines = this.props.topHeadlines.articles.map((article, index) => {
                 return (
-                    <TouchableOpacity key={index}>
+                    <TouchableOpacity key={index} onPress={() => this.props.data.navigation.navigate({routeName: 'Webview', params: {url: article.url}})}>
                         <View style={styles.headlinesView} key={index + 1}>
                             <View style={styles.articleTitleView} key={index + 2}>
-                                <Text style={styles.articleTitleName} numberOfLines={2}>
+                                <Text style={styles.articleTitleName} numberOfLines={4}>
                                     {article.title}
                                 </Text>
                             </View>
@@ -36,7 +36,7 @@ class newsComponent extends Component {
                                 />
                             </View>
                             <View style={styles.articleDescriptionView} key={index + 4}>
-                                <Text style={styles.articleDescriptionText} numberOfLines={4}>
+                                <Text style={styles.articleDescriptionText} numberOfLines={5}>
                                     {article.description}
                                 </Text>
                             </View>
@@ -53,6 +53,16 @@ class newsComponent extends Component {
                         <Text style={styles.heading}>
                             {'Headlines'}
                         </Text>
+                        <TouchableOpacity onPress={() => this.props.data.navigation.navigate({routeName: 'Webview', params: {url: 'https://newsapi.org/'}})}>
+                            <Text style={{fontSize: 12,
+                                color: Colors.brown,
+                                fontFamily: Fonts.titanOne,
+                                paddingLeft: 5,
+                                marginLeft: 5
+                            }}>
+                                {'Powered by News API'}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <ScrollView
                         contentContainerStyle={styles.scrollViewContainer}
@@ -93,7 +103,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     headlinesView: {
-        height: 320,
+        height: 450,
         width: 300,
         margin: 10,
         padding: 10,
@@ -104,7 +114,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     articleDescriptionText: {
-        fontSize: 18,
+        fontSize: 24,
         color: Colors.white,
         fontFamily: Fonts.primary,
         flexShrink: 1,
@@ -127,7 +137,7 @@ const styles = StyleSheet.create({
         padding: 5,
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
-        backgroundColor: Colors.orange
+        backgroundColor: Colors.brown
     }
 });
 

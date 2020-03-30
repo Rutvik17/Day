@@ -197,7 +197,7 @@ class Home extends Component {
                             <WeatherCard />
                         </View>
                         <View style={styles.newsContainer}>
-                            <NewsComponent />
+                            <NewsComponent data={this.props.data}/>
                         </View>
                         <View style={{margin: 2.5, padding: 2.5}}>
                             <View style={{margin: 2.5, padding: 2.5}}>

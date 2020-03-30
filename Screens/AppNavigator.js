@@ -5,6 +5,7 @@ import Login from "./Login";
 import Index from "./Index";
 import UpdateUserName from "./updateUserName";
 import ConfirmDelete from "./ConfirmDelete";
+import Webview from "./Webview";
 
 const AppNavigator = createStackNavigator({
   Index: {
@@ -21,6 +22,9 @@ const AppNavigator = createStackNavigator({
   },
   ConfirmDelete: {
     screen: ConfirmDelete
+  },
+  Webview: {
+    screen: Webview,
   }
 }, {
   headerMode: 'none',
