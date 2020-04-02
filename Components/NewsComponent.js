@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },
     heading: {
         fontSize: 36,
-        color: Colors.red,
+        color: Colors.orange,
         fontFamily: Fonts.titanOne,
         letterSpacing: 1,
         margin: 5,

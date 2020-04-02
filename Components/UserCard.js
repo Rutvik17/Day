@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     },
     userCardLocation: {
         fontFamily: Fonts.titanOne,
-        color: Colors.lightBlue,
+        color: Colors.brown,
         fontSize: 36,
         width: '100%',
         letterSpacing: 1,
