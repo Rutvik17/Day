@@ -3,8 +3,8 @@
 This is a `React-Native` project with `firebase authentication` that 
 will keep you updated with everything happening on the `DAY`.
 
-![login](https://user-images.githubusercontent.com/19266929/78201688-300c0d00-7460-11ea-86ee-1569b69d58c8.PNG)
-![home](https://user-images.githubusercontent.com/19266929/78201693-34382a80-7460-11ea-8ee5-84d258da5e70.PNG)
+![login](https://user-images.githubusercontent.com/19266929/78202046-377fe600-7461-11ea-8f92-8e4ad169e8f9.gif)
+![home](https://user-images.githubusercontent.com/19266929/78202048-3a7ad680-7461-11ea-85ee-5cd928b2281c.gif)
 
 `The purpose of this project is to share code, collaborate with people in the community and to be a motivation for people to create something amazing! ❤️`
 
